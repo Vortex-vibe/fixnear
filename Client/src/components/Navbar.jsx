@@ -59,6 +59,13 @@ function Navbar({ theme, toggleTheme }) {
           {theme === "dark" ? "☀" : "🌙"}
         </button>
 
+        {!token && (
+          <>
+            <Link to="/login" className="login-link">Login</Link>
+            <Link to="/signup" className="register-link">Register</Link>
+          </>
+        )}
+
         {token && (
           <button onClick={handleLogout} className="icon-btn logout-btn">
             ⎋

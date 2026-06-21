@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import API_BASE_URL from "../api";
 
 function Signup() {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ function Signup() {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${API_URL}/api/auth/register`, {
+      const response = await fetch(`${API_BASE_URL}/api/auth/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -34,16 +35,12 @@ function Signup() {
 
       if (response.ok) {
         alert("Registration successful. Please login now.");
-
-        if (formData.role === "worker") {
-          navigate("/login");
-        } else {
-          navigate("/login");
-        }
+        navigate("/login");
       } else {
         alert(data.message || "Signup failed");
       }
     } catch (error) {
+      console.error("Signup error:", error);
       alert("Signup failed. Check backend server.");
     }
   }
@@ -63,6 +60,7 @@ function Signup() {
             name="name"
             placeholder="Full Name"
             minLength="3"
+            value={formData.name}
             onChange={handleChange}
             required
           />
@@ -71,6 +69,7 @@ function Signup() {
             type="email"
             name="email"
             placeholder="Email Address"
+            value={formData.email}
             onChange={handleChange}
             required
           />
@@ -80,6 +79,7 @@ function Signup() {
             name="password"
             placeholder="Password"
             minLength="6"
+            value={formData.password}
             onChange={handleChange}
             required
           />
